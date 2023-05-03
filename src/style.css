@@ -14,9 +14,64 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  box-sizing: border-box;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+}
 html,
 body {
   height: 100%;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+}
+* {
+  line-height: 1.5;
+  line-height: calc(1em + 0.5rem);
+  vertical-align: baseline;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+ol,
+ul {
+  list-style: none;
+}
+
+html,
+body {
+  height: 100%;
+  font-size: larger;
 }
 
 #myCanvas {
@@ -27,4 +82,12 @@ body {
   transform: translate(-50%, -50%);
   max-width: 100%;
   max-height: 100%;
+}
+
+.controls {
+  position: absolute;
+  z-index: 10;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%);
 }
