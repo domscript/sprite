@@ -13,11 +13,15 @@ window.addEventListener("load", () => {
   const spriteHeight = 180;
   let frameX = 0;
   let frameY = 0;
-  let gameFrame = 0;
-  const reduceFrames = 4;
+  let frameInterval = 30;
+  let frameTimer = 0;
 
-  function animate() {
+  let lastTime = 0;
+
+  function animate(timeStamp: number = 0) {
     if (!ctx) return;
+    const deltaTimeInMilliseconds = timeStamp - lastTime;
+    lastTime = timeStamp;
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.drawImage(
       playerImage,
@@ -30,11 +34,13 @@ window.addEventListener("load", () => {
       CANVAS_WIDTH,
       CANVAS_HEIGHT
     );
-    if (gameFrame % reduceFrames === 0) {
+    if (frameTimer < frameInterval) {
+      frameTimer += deltaTimeInMilliseconds;
+    } else {
+      frameTimer = 0;
       if (frameX < 6) frameX++;
       else frameX = 0;
     }
-    gameFrame++;
     requestAnimationFrame(animate);
   }
   animate();
