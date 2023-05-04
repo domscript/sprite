@@ -1,66 +1,71 @@
 import "./style.css";
-import { spriteAnimations } from "./utils";
-
+import { spriteMap, copyContent } from "./utils";
+import { canvasHandler } from "./canvas";
 window.addEventListener("load", () => {
-  let playerState = "IDLE";
-  const dropdown = document.getElementById("animations") as HTMLSelectElement;
+  const size = 100;
+  const input = document.querySelector("#file") as HTMLInputElement;
+  const rows = document.querySelector("#rows") as HTMLInputElement;
+  const colomns = document.querySelector("#colomns") as HTMLInputElement;
+  const button = document.getElementsByTagName("button")[0];
+  const canvasesContainer = document.getElementById(
+    "canvases"
+  ) as HTMLDivElement;
 
-  dropdown.insertAdjacentHTML(
-    "afterbegin",
-    Object.keys(spriteAnimations).reduce(
-      (acc, el) =>
-        (acc += `<option value="${el}">${el.toLowerCase()}</option>`),
-      ""
-    )
-  );
-
-  dropdown.addEventListener("change", function (e: Event) {
-    const target = e.target as typeof e.target & {
-      value: string;
-    };
-    playerState = target.value; // typechecks!
+  input!.addEventListener("change", function () {
+    const file = this.files;
+    if (!file) return;
+    spriteImageURL = `${URL.createObjectURL(file[0])}`;
+    playerImage = new Image();
+    playerImage.src = spriteImageURL;
   });
 
-  const canvas = document.querySelector("#myCanvas") as HTMLCanvasElement;
-  const ctx: CanvasRenderingContext2D | null = canvas.getContext("2d");
+  let spriteImageURL = "mad_dog.png";
+  let playerImage = new Image();
+  playerImage.src = spriteImageURL;
+  let spriteAnimations = spriteMap({
+    height: playerImage.height,
+    widht: playerImage.width,
+    rows: Number(rows.value),
+    columns: Number(colomns.value),
+  });
 
-  const CANVAS_WIDTH = (canvas.width = 2400);
-  const CANVAS_HEIGHT = (canvas.height = 1800);
+  button.addEventListener("click", async function () {
+    let text = `export const SpritesMap = `;
+    text += await JSON.stringify(spriteAnimations);
+    copyContent(text);
+  });
 
-  const playerImage = new Image();
-  playerImage.src = "mad_dog.png";
-  let frameInterval = 30;
-  let frameTimer = 0;
-  let lastTime = 0;
-  let frameX = 0;
-  let frameY = 0;
+  [rows, colomns].forEach((el: HTMLInputElement) => {
+    el.addEventListener("change", function () {
+      spriteAnimations = spriteMap({
+        height: playerImage.height,
+        widht: playerImage.width,
+        rows: Number(rows.value),
+        columns: Number(colomns.value),
+      });
 
-  function animate(timeStamp: number = 0) {
-    if (!ctx) return;
-    const deltaTimeInMilliseconds = timeStamp - lastTime;
-    lastTime = timeStamp;
-    if (frameTimer < frameInterval) {
-      frameTimer += deltaTimeInMilliseconds;
-    } else {
-      let frameXL = spriteAnimations[playerState].loc.length - 1;
-      frameY = spriteAnimations[playerState].loc[0].y;
-      ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      ctx.drawImage(
-        playerImage,
-        frameX * spriteAnimations[playerState].sizeX,
-        frameY,
-        spriteAnimations[playerState].sizeX,
-        spriteAnimations[playerState].sizeY,
-        0,
-        0,
-        CANVAS_WIDTH,
-        CANVAS_HEIGHT
+      canvasesContainer.innerHTML = Object.keys(spriteAnimations).reduce(
+        (acc, el: keyof typeof spriteAnimations) =>
+          (acc += `<div class="grid_row"><canvas id="c-${el}" width="${size}" height="${size}"></canvas><label for="${el}">${el}: numbers of frames</label><input 
+        class="inputCol" type="number" min="1" max="100" step="1" value="${spriteAnimations[el].loc.length}" id="${el}" /></div>`),
+        ""
       );
-      frameTimer = 0;
-      if (frameX < frameXL) frameX++;
-      else frameX = 0;
-    }
-    requestAnimationFrame(animate);
-  }
-  animate();
+
+      const canvases = document.getElementsByTagName("canvas");
+      const inputs = document.getElementsByClassName(
+        "inputCol"
+      ) as HTMLCollectionOf<HTMLInputElement>;
+
+      [...canvases].forEach((canvas, index) => {
+        canvasHandler(
+          canvas,
+          inputs,
+          index,
+          spriteAnimations,
+          playerImage,
+          size
+        );
+      });
+    });
+  });
 });
