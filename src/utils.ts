@@ -4,6 +4,7 @@ export enum dropdownElements {
   ANIMATION = "animations",
   SIZE = "size",
   GROUND = "ground",
+  FRAMERATE = "framerate",
 }
 
 export function insertMyHTML(elementID: dropdownElements) {
@@ -13,6 +14,7 @@ export function insertMyHTML(elementID: dropdownElements) {
     [dropdownElements.ANIMATION]: Object.keys(SpritesMap),
     [dropdownElements.SIZE]: ["1", "0.8", "0.6", "0.4", "0.2"],
     [dropdownElements.GROUND]: ["0", "100", "200", "300", "400", "500"],
+    [dropdownElements.FRAMERATE]: ["15", "30", "45", "60", "80", "100", "500"],
   };
 
   dropdown.insertAdjacentHTML(

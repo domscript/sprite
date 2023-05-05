@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
 
   const playerImage = new Image();
   playerImage.src = "tablet_small.png";
-  let frameInterval = 30;
+  let frameInterval = 15;
   let frameTimer = 0;
   let lastTime = 0;
   let frame = 0;
@@ -25,30 +25,37 @@ window.addEventListener("load", () => {
   const dropdownSize = insertMyHTML(dropdownElements.SIZE);
   const dropdownGround = insertMyHTML(dropdownElements.GROUND);
 
-  [dropdown, dropdownSize, dropdownGround].forEach((element) => {
-    element.addEventListener("change", function (e: Event) {
-      const target = e.target as typeof e.target & {
-        value: keyof typeof SpritesMap;
-      };
-      switch (element.name) {
-        case dropdownElements.ANIMATION:
-          playerState = target.value; // typechecks!
-          frame = 0;
-          frameMax = SpritesMap[playerState].loc.length - 1;
-          break;
-        // TODO :
-        case dropdownElements.SIZE:
-          scale = Number(target.value); // error typechecks
-          break;
-        case dropdownElements.GROUND:
-          groundMargin = Number(target.value); // error typechecks
-          break;
-        default:
-          console.error("bad happends");
-          break;
-      }
-    });
-  });
+  const dropdownFrameRate = insertMyHTML(dropdownElements.FRAMERATE);
+
+  [dropdown, dropdownSize, dropdownGround, dropdownFrameRate].forEach(
+    (element) => {
+      element.addEventListener("change", function (e: Event) {
+        const target = e.target as typeof e.target & {
+          value: keyof typeof SpritesMap;
+        };
+        switch (element.name) {
+          case dropdownElements.ANIMATION:
+            playerState = target.value; // typechecks!
+            frame = 0;
+            frameMax = SpritesMap[playerState].loc.length - 1;
+            break;
+          // TODO :
+          case dropdownElements.SIZE:
+            scale = Number(target.value); // error typechecks
+            break;
+          case dropdownElements.GROUND:
+            groundMargin = Number(target.value); // error typechecks
+            break;
+          case dropdownElements.FRAMERATE:
+            frameInterval = Number(target.value); // error typechecks
+            break;
+          default:
+            console.error("bad happends");
+            break;
+        }
+      });
+    }
+  );
 
   function animate(timeStamp: number = 0) {
     if (!ctx) return;
