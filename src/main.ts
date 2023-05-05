@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
 
   let playerState = Object.keys(SpritesMap)[0] as keyof typeof SpritesMap;
   let scale = 1;
-  let groundMargin = 100;
+  let groundMargin = 0;
 
   dropdown.insertAdjacentHTML(
     "afterbegin",
@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
 
   dropdownGround.insertAdjacentHTML(
     "afterbegin",
-    [100, 200, 300, 400, 500].reduce(
+    [0, 100, 200, 300, 400, 500].reduce(
       (acc, el) =>
         (acc += `<option value="${el}">${String(el).toLowerCase()}</option>`),
       ""
