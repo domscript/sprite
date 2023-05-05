@@ -1,13 +1,13 @@
 import "./style.css";
-import { spriteAnimations } from "./utils";
+import { SpritesMap } from "./spriteMap";
 
 window.addEventListener("load", () => {
-  let playerState = "IDLE";
+  let playerState = Object.keys(SpritesMap)[0] as keyof typeof SpritesMap;
   const dropdown = document.getElementById("animations") as HTMLSelectElement;
 
   dropdown.insertAdjacentHTML(
     "afterbegin",
-    Object.keys(spriteAnimations).reduce(
+    Object.keys(SpritesMap).reduce(
       (acc, el) =>
         (acc += `<option value="${el}">${el.toLowerCase()}</option>`),
       ""
@@ -16,7 +16,7 @@ window.addEventListener("load", () => {
 
   dropdown.addEventListener("change", function (e: Event) {
     const target = e.target as typeof e.target & {
-      value: string;
+      value: keyof typeof SpritesMap;
     };
     playerState = target.value; // typechecks!
   });
@@ -28,7 +28,7 @@ window.addEventListener("load", () => {
   const CANVAS_HEIGHT = (canvas.height = 1800);
 
   const playerImage = new Image();
-  playerImage.src = "mad_dog.png";
+  playerImage.src = "white_dog.png";
   let frameInterval = 30;
   let frameTimer = 0;
   let lastTime = 0;
@@ -42,15 +42,15 @@ window.addEventListener("load", () => {
     if (frameTimer < frameInterval) {
       frameTimer += deltaTimeInMilliseconds;
     } else {
-      let frameXL = spriteAnimations[playerState].loc.length - 1;
-      frameY = spriteAnimations[playerState].loc[0].y;
+      let frameXL = SpritesMap[playerState].loc.length - 1;
+      frameY = SpritesMap[playerState].loc[0].y;
       ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
       ctx.drawImage(
         playerImage,
-        frameX * spriteAnimations[playerState].sizeX,
+        frameX * SpritesMap[playerState].sizeX,
         frameY,
-        spriteAnimations[playerState].sizeX,
-        spriteAnimations[playerState].sizeY,
+        SpritesMap[playerState].sizeX,
+        SpritesMap[playerState].sizeY,
         0,
         0,
         CANVAS_WIDTH,
