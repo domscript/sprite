@@ -51,15 +51,15 @@ window.addEventListener("load", () => {
         ""
       );
 
-      const canvases = document.getElementsByTagName("canvas");
-      const inputs = document.getElementsByClassName(
+      const canvases = canvasesContainer.getElementsByTagName("canvas");
+      const inputs = canvasesContainer.getElementsByClassName(
         "inputCol"
       ) as HTMLCollectionOf<HTMLInputElement>;
 
       [...canvases].forEach((canvas, index) => {
         canvasHandler(
           canvas,
-          inputs,
+          inputs[index],
           index,
           spriteAnimations,
           playerImage,

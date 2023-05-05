@@ -2,7 +2,7 @@ import { SpritesMapType } from "./utils";
 
 export function canvasHandler(
   canvas: HTMLCanvasElement,
-  inputs: HTMLCollectionOf<HTMLInputElement>,
+  input: HTMLInputElement,
   index: number,
   spriteAnimations: SpritesMapType,
   playerImage: HTMLImageElement,
@@ -13,22 +13,37 @@ export function canvasHandler(
   const CANVAS_WIDTH = (canvas.width = size);
   const CANVAS_HEIGHT = (canvas.height = size);
 
+  const newSpriteMap: SpritesMapType = Object.entries(spriteAnimations).reduce(
+    (acc: SpritesMapType, [state, data]) => {
+      acc[state] = {
+        ...data,
+        loc: data.loc.map((e) => ({ ...e })),
+      };
+      return acc;
+    },
+    {}
+  );
+
   let frameInterval = 100;
   let frameTimer = 0;
   let lastTime = 0;
 
   let frameX = 0;
-  let frameXL = Number(inputs[index].value) - 1;
+  if (!input) return;
+  let frameXL = Number(input.value) - 1;
 
   const spriteStates = Object.keys(spriteAnimations);
   const currentState = spriteStates[index];
   const sizeX = spriteAnimations[currentState].sizeX;
   const sizeY = spriteAnimations[currentState].sizeY;
 
-  inputs[index].addEventListener("change", function () {
-    const n = Number(inputs[index].value);
+  input.addEventListener("change", function () {
+    const n = Number(input.value);
     frameXL = n - 1;
-    spriteAnimations[currentState].loc.splice(n + 1);
+    spriteAnimations[currentState].loc = newSpriteMap[currentState].loc.slice(
+      0,
+      n
+    );
   });
 
   function animate(timeStamp: number = 0) {
