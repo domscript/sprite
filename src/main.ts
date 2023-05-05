@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
   let groundMargin = 0;
 
   const playerImage = new Image();
-  playerImage.src = "white_dog.png";
+  playerImage.src = "tablet_small.png";
   let frameInterval = 30;
   let frameTimer = 0;
   let lastTime = 0;
