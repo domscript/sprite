@@ -8,6 +8,118 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <canvas id="myCanvas"></canvas>
+    <main>
+      <h1>Find the Cake!!!</h1>
+      <img width="500" height="200" src="fruits_image.png" alt="Image" />
+      <h2>Canvas</h2>
+      <canvas id="myCanvas"></canvas>
+      <h3>drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)</h3>
+      <div class="controls">
+        <div class="columns">
+          <div>
+            <label for="sx">Pick sx:</label>
+            <select name="sx" id="sx"></select>
+          </div>
+          <div>
+            <label for="sy">Pick sy:</label>
+            <select name="sy" id="sy"></select>
+          </div>
+          <div>
+            <label for="sw">Pick sw:</label>
+            <select name="sw" id="sw"></select>
+          </div>
+          <div>
+            <label for="sh">Pick sh:</label>
+            <select name="sh" id="sh"></select>
+          </div>
+        </div>
+        <div class="columns">
+          <div>
+            <label for="dx">Pick dx:</label>
+            <select name="dx" id="dx"></select>
+          </div>
+          <div>
+            <label for="dy">Pick dy:</label>
+            <select name="dy" id="dy"></select>
+          </div>
+          <div>
+            <label for="dw">Pick dw:</label>
+            <select name="dw" id="dw"></select>
+          </div>
+          <div>
+            <label for="dh">Pick dh:</label>
+            <select name="dh" id="dh"></select>
+          </div>
+        </div>
+      </div>
+      <p>To Restart just refresh the Page.</p>
+      <p>Just remember it is possible to find all elements! Have fun!!!</p>
+      <h2 class="left">Parameters</h2>
+      <h3>image</h3>
+      <p>
+        An element to draw into the context. The specification permits any
+        canvas image source, specifically, an HTMLImageElement, an
+        SVGImageElement, an HTMLVideoElement, an HTMLCanvasElement, an
+        ImageBitmap, an OffscreenCanvas, or a VideoFrame.
+      </p>
+
+      <h3>sx (Optional)</h3>
+      <p>
+        The x-axis coordinate of the top left corner of the sub-rectangle of the
+        source image to draw into the destination context. Use the 3- or
+        5-argument syntax to omit this argument.
+      </p>
+
+      <h3>sy (Optional)</h3>
+      <p>
+        The y-axis coordinate of the top left corner of the sub-rectangle of the
+        source image to draw into the destination context. Use the 3- or
+        5-argument syntax to omit this argument.
+      </p>
+
+      <h3>sWidth (Optional)</h3>
+      <p>
+        The width of the sub-rectangle of the source image to draw into the
+        destination context. If not specified, the entire rectangle from the
+        coordinates specified by sx and sy to the bottom-right corner of the
+        image is used. Use the 3- or 5-argument syntax to omit this argument. A
+        negative value will flip the image.
+      </p>
+
+      <h3>sHeight (Optional)</h3>
+      <p>
+        The height of the sub-rectangle of the source image to draw into the
+        destination context. Use the 3- or 5-argument syntax to omit this
+        argument. A negative value will flip the image.
+      </p>
+
+      <h3>dx</h3>
+      <p>
+        The x-axis coordinate in the destination canvas at which to place the
+        top-left corner of the source image.
+      </p>
+
+      <h3>dy</h3>
+      <p>
+        The y-axis coordinate in the destination canvas at which to place the
+        top-left corner of the source image.
+      </p>
+
+      <h3>dWidth</h3>
+      <p>
+        The width to draw the image in the destination canvas. This allows
+        scaling of the drawn image. If not specified, the image is not scaled in
+        width when drawn. Note that this argument is not included in the
+        3-argument syntax.
+      </p>
+
+      <h3>dHeight</h3>
+      <p>
+        The height to draw the image in the destination canvas. This allows
+        scaling of the drawn image. If not specified, the image is not scaled in
+        height when drawn. Note that this argument is not included in the
+        3-argument syntax.
+      </p>
+    </main>
   </body>
 </html>

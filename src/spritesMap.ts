@@ -1,1 +1,0 @@
-export const SpritesMap = {"state0":{"sizeX":48,"sizeY":58,"loc":[{"x":0,"y":0},{"x":48,"y":0},{"x":96,"y":0}]},"state1":{"sizeX":48,"sizeY":58,"loc":[{"x":0,"y":58},{"x":48,"y":58},{"x":96,"y":58}]},"state2":{"sizeX":48,"sizeY":58,"loc":[{"x":0,"y":116},{"x":48,"y":116},{"x":96,"y":116}]}}
